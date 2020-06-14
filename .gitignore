@@ -4,3 +4,6 @@
 !/Codeforces/**/
 !*.md
 !*.gitignore
+!*.cpp
+!*.c
+!*.h
