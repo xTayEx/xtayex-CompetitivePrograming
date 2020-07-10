@@ -4,6 +4,8 @@
 !/Codeforces/**/
 !/nowcoder/
 !/nowcoder/**/
+!/HDU/
+!/HDU/**/
 !*.md
 !*.gitignore
 !*.cpp
