@@ -6,6 +6,8 @@
 !/nowcoder/**/
 !/HDU/
 !/HDU/**/
+!/POJ/
+!/POJ/**/
 !*.md
 !*.gitignore
 !*.cpp
