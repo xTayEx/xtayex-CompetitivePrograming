@@ -61,16 +61,16 @@ void zhuliu(int root,int n,int m,edge E[])
     double res=0;
     int v;
     while(1){
-        for(int i=1;i<=n;i++){
+        for(int i=0;i<n;i++){
             inedge[i]=dinf;
         }
-        for(int i=1;i<=m;i++){
+        for(int i=0;i<m;i++){
             if(es[i].u!=es[i].v&&es[i].dis<inedge[es[i].v]){
                 pre[es[i].v]=es[i].u;
                 inedge[es[i].v]=es[i].dis;
             }
         }
-        for(int i=1;i<=n;i++){
+        for(int i=0;i<n;i++){
             if(i!=root&&inedge[i]==dinf){ // 某个点不可达
                 //printf("i = %d\n",i);
                 puts("poor snoopy");
@@ -80,7 +80,7 @@ void zhuliu(int root,int n,int m,edge E[])
         mst(id,-1);mst(vis,-1);
         int tn=0;
         inedge[root]=0;
-        for(int i=1;i<=n;i++){
+        for(int i=0;i<n;i++){
             res+=inedge[i];
             v=i;
             while(vis[v]!=i&&id[v]==-1&&v!=root){
@@ -95,12 +95,12 @@ void zhuliu(int root,int n,int m,edge E[])
             }
         }
         if(tn==0) break;
-        for(int i=1;i<=n;i++){
+        for(int i=0;i<n;i++){
             if(id[i]==-1){
                 id[i]=tn++;
             }
         }
-        for(int i=1;i<=m;i++){
+        for(int i=0;i<m;i++){
             v=es[i].v;
             es[i].u=id[es[i].u];
             es[i].v=id[es[i].v];
@@ -118,21 +118,19 @@ int main()
     int n,m;
     while(scanf("%d %d",&n,&m)!=EOF){
         double x,y;
-        for(int i=1;i<=n;i++){
+        for(int i=0;i<n;i++){
             scanf("%lf %lf",&x,&y);
             ns[i]=node(x,y);
         }
         int u,v;double Dis;
-        for(int i=1;i<=m;i++){
+        for(int i=0;i<m;i++){
             scanf("%d %d",&u,&v);
-            if(u==v){
-                i--;m--;
-                continue;
-            }
-            Dis=dist(ns[u],ns[v]);
+            u--;v--;
+            if(u==v) Dis=dinf;
+            else Dis=dist(ns[u],ns[v]);
             es[i]=edge(u,v,Dis);
         }
-        zhuliu(1, n, m, es);
+        zhuliu(0, n, m, es);
     }
     return 0;
 }
