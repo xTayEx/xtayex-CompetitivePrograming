@@ -20,8 +20,7 @@ const int maxn = 1e5 + 5;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
-int wa[maxn], wb[maxn], wv[maxn], wss[maxn], rak[maxn], height[maxn], cal[maxn], sa[maxn];
-int k, n;
+int wa[maxn], wb[maxn], wv[maxn], wss[maxn], rak[maxn], height[maxn], cal[maxn], n, sa[maxn << 1];
 char s[maxn];
 int cmp(int* r, int a, int b, int l)
 {
@@ -38,7 +37,7 @@ void da(int* r, int* sa, int n, int M)
         wss[i] += wss[i - 1];
     for (i = n - 1; i >= 0; i--)
         sa[--wss[x[i]]] = i;
-    for (j = 1, p = 1; p < n && j < n; j *= 2, M = p) {
+    for (j = 1, p = 1; p < n; j <<= 1, M = p) {
         for (p = 0, i = n - j; i < n; i++)
             y[p++] = i;
         for (i = 0; i < n; i++)
@@ -59,52 +58,33 @@ void da(int* r, int* sa, int n, int M)
     }
     return;
 }
-void calheight(int* r, int* sa, int n)
-{
-    int i, j, k = 0;
-    for (i = 1; i <= n; i++)
-        rak[sa[i]] = i;
-    for (i = 0; i < n; height[rak[i++]] = k)
-        for (k ? k-- : 0, j = sa[rak[i] - 1]; r[i + k] == r[j + k]; k++)
-            ;
-    for (int i = n; i; i--)
-        rak[i] = rak[i - 1], sa[i]++;
-}
-bool judge(int len)
-{
-    int cnt = 0;
-    for (int i = 1; i <= n; i++) {
-        if (height[i] >= len) {
-            cnt++;
-        } else {
-            cnt = 0;
-        }
-        if (cnt + 1 >= k) {
-            return 1;
-        }
-    }
-    return 0;
-}
 int main()
 {
-    scanf("%d %d", &n, &k);
-    for (int i = 1; i <= n; i++) {
-        scanf("%d", &cal[i]);
+    //freopen("./A.in", "r", stdin);
+    while (scanf("%d", &n) != EOF) {
+        fill(cal, cal + maxn, 0);
+        scanf("%s", s + 1);
+        int pre[2] = { n + 1, n + 1 };
+        for (int i = n; i >= 1; i--) {
+            if (pre[s[i] - 'a'] == n + 1) {
+                cal[i] = n;
+            } else {
+                cal[i] = pre[s[i] - 'a'] - i;
+            }
+            pre[s[i] - 'a'] = i;
+        }
+        cal[n + 1] = n + 1;
+        //puts("cal: ");
+        //for (int i = 1; i <= n + 1; i++) {
+        //  printf("%d ",cal[i]);
+        //}
+        //puts("");
+        //puts("----------------------");
+
+        da(cal + 1, sa, n + 2, n + 2);
+        for (int i = n; i >= 1; i--) {
+            printf("%d%c", sa[i] + 1, i == 1 ? '\n' : ' ');
+        }
     }
-    cal[n + 1] = 0;
-    da(cal + 1, sa, n + 1, 300);
-    calheight(cal + 1, sa, n);
-    int lef = 1;
-    int rig = n;
-    while (lef < rig) {
-        int mid = (lef + rig) >> 1;
-        if (judge(mid))
-            lef = mid + 1;
-        else
-            rig = mid;
-    }
-    if (!judge(lef))
-        lef--;
-    printf("%d\n", max(lef, 0));
     return 0;
 }
