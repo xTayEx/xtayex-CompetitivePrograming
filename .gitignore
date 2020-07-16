@@ -10,6 +10,8 @@
 !/POJ/**/
 !/SPOJ/
 !/SPOJ/**/
+!/SCU/**/
+!/SCU/
 !*.md
 !*.gitignore
 !*.cpp
