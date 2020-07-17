@@ -23,7 +23,7 @@ typedef unsigned long long ull;
 ll A[maxn];
 ll ans[maxn];
 bool vis[maxn];
-vector<int> loops[maxn];
+vector<int> rings[maxn];
 ll n, k;
 ll exgcd(ll a, ll b, ll& x, ll& y)
 {
@@ -49,10 +49,10 @@ ll inv(ll a, ll n)
 }
 void solve(int i)
 {
-    ll sz = loops[i].size();
+    ll sz = rings[i].size();
     ll Inv = inv(k % sz, sz);
     for (int j = 0; j < sz; j++) {
-        ans[loops[i][j]] = loops[i][(j + Inv) % sz];
+        ans[rings[i][j]] = rings[i][(j + Inv) % sz];
     }
 }
 int main()
@@ -66,7 +66,7 @@ int main()
         if (!vis[i]) {
             int now = i;
             while (!vis[now]) {
-                loops[cnt].push_back(now);
+                rings[cnt].push_back(now);
                 vis[now] = 1;
                 now = A[now];
             }
@@ -74,7 +74,7 @@ int main()
         }
     }
     for (int i = 0; i < cnt; i++) {
-        if (loops[i].empty())
+        if (rings[i].empty())
             continue;
         solve(i);
     }
