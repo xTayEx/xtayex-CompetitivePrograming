@@ -12,6 +12,8 @@
 !/SPOJ/**/
 !/SCU/**/
 !/SCU/
+!/region/**/
+!/region/
 !*.md
 !*.gitignore
 !*.cpp
