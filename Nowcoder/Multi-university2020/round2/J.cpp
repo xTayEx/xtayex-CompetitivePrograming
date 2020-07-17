@@ -1,31 +1,57 @@
-#include <iostream>
-#include <cstdio>
-#include <algorithm>
-#include <cstring>
-#include <string>
-#include <vector>
-#include <map>
-#include <stack>
-#include <queue>
-#include <set>
-#include <cctype>
-#include <cmath>
-#include <unordered_map>
-#define mst(a,b) memset((a),(b),sizeof(a))
-#define debug printf("debug\n")
-#define INF 0x3f3f3f3f
-#define lson lef,mid,rt<<1
-#define rson mid+1,rig,rt<<1|1
-const int maxn=1e5+5;
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-typedef unsigned long long ull;
-int a[maxn];
+const int maxn = 1e5 + 5;
+int n, k;
+vector<int> c[maxn];
+int vis[maxn];
+int a[maxn], d[maxn];
+int ans[maxn];
+int tot = 0;
+void dfs(int u, int fa)
+{
+    vis[u] = 1;
+    c[tot].push_back(u);
+    if (a[u] != fa) {
+        dfs(a[u], fa);
+    }
+}
+void solve(int t)
+{
+    int siz = c[t].size();
+    int p = k % siz;
+    int q = 0;
+    for (int i = 0; i < siz; i++) {
+        if (1LL * i * p % siz == 1) {
+            q = i;
+        }
+    }
+    for (int i = 0; i < siz; i++) {
+        ans[c[t][i]] = c[t][(i + q) % siz];
+    }
+}
 int main()
 {
-    int n;ll k;scanf("%d %lld",&n,&k);
-    for(int i=1;i<=n;i++){
-        scanf("%d",&a[i]);
-    }
+    ios::sync_with_stdio(0);
+    cin.tie(0), cout.tie(0);
 
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        d[a[i]] = i;
+    }
+    for (int i = 1; i <= n; i++) {
+        if (!vis[i]) {
+            dfs(i, i);
+            tot++;
+        }
+    }
+    //int t = 0;
+    for (int i = 0; i < tot; i++) {
+        solve(i);
+    }
+    for (int i = 1; i <= n; i++) {
+        cout << ans[i] << " ";
+    }
+    cout << endl;
+    return 0;
 }
