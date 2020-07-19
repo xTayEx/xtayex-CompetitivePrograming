@@ -20,33 +20,22 @@ const int maxn = 2e6 + 5;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
-char s[maxn];
 int main()
 {
     int T;
     scanf("%d", &T);
     while (T--) {
-        int n;
-        scanf("%d", &n);
-        scanf("%s", s + 1);
-        int ba = 0;
-        int ans = 0;
-        for (int i = n; i >= 1; i--) {
-            if (s[i] == '0') {
-                ba++;
-            } else if (s[i] == '1') {
-                if (ba > 0) {
-                    ba--;
-                    ans++;
-                } else
-                    ba++;
-            } else if (s[i] == '2') {
-                ans++;
-            } else if (s[i] == '3') {
-                ans++;
+        int n;scanf("%d",&n);
+        int ba=0,ans=0;int tmp;
+        for(int i=0;i<n;i++){
+            scanf("%1d",&tmp);
+            if(tmp==2||tmp==3) ans++;
+            else if(tmp==1) ba++;
+            else{
+                if(ba>0) ba--,ans++;
             }
         }
-        printf("%d\n", ans);
+        printf("%d\n",ans+ba/2);
     }
     return 0;
 }
