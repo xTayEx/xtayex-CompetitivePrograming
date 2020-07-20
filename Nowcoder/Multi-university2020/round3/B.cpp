@@ -16,36 +16,32 @@
 #define INF 0x3f3f3f3f
 #define lson lef,mid,rt<<1
 #define rson mid+1,rig,rt<<1|1
-const int maxn=1e5+5;
+const int maxn=2e6+5;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
 char s[maxn];
 int main()
 {
-    int T;scanf("%d",&T);
-    while(T--){
-        int n;scanf("%d",&n);
-        scanf("%s",s+1);
-        int ba=0;int ans=0;
-        for(int i=1;i<=n;i++){
-            if(s[i]=='0'){
-                if(i==1) continue;
-                if(ba>0){
-                    ba--;ans++;
-                }
-            }else if(s[i]=='1'){
-                if(ba>0){
-                    ba--;ans++;
-                }
-                ba++;
-            }else if(s[i]=='2'){
-                ans++;
-            }else if(s[i]=='3'){
-                ans++;ba++;
+    scanf("%s",s);
+    int len=strlen(s);
+    int q;scanf("%d",&q);
+    int p=0;
+    while(q--){
+        char op[2];int x;
+        scanf("%s %d",op,&x);
+        if(op[0]=='M'){
+            if(x>0){
+                p=(p+x)%len;
+            }else{
+                x=abs(x);
+                p-=x;
+                p=(p%len+len)%len;
             }
+        }else if(op[0]=='A'){
+            x--;
+            printf("%c\n",s[(p+x)%len]);
         }
-        printf("%d\n",ans);
     }
     return 0;
 }
