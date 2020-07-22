@@ -1,4 +1,3 @@
-
 #include <algorithm>
 #include <cctype>
 #include <cmath>
@@ -21,20 +20,8 @@ const int maxn = 2e5 + 5;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
-int a[maxn];
-ll d[maxn], t;
-ll dis[maxn];
-ll solve()
-{
-    dis[0] = d[1];
-    dis[1] = d[1];
-    dis[2] = dis[1] + d[2];
-    for (int i = 3; i <= t - 2; i++) {
-        dis[i] = min(dis[i - 1], dis[i - 2]) + d[i];
-    }
-    dis[t - 1] = min(dis[t - 2], dis[t - 3]) + d[t - 1];
-    return dis[t - 1];
-}
+ll arr[maxn];
+ll dp[maxn];
 int main()
 {
     int T;
@@ -42,23 +29,27 @@ int main()
     while (T--) {
         int n;
         scanf("%d", &n);
-        for (int i = 0; i < n; i++) {
-            scanf("%d", &a[i]);
+        for (int i = 1; i <= n; i++) {
+            scanf("%lld", &arr[i]);
         }
-        sort(a, a + n);
-        ll ans1 = 0;
-        t = 1;
-        for (int i = n - 1; i >= 0; i--) {
-            if (i % 2 == 1) {
-                ans1 += a[i];
-            } else {
-                ans1 -= a[i];
-                if (i != 0) {
-                    d[t++] = a[i] - a[i - 1];
-                }
-            }
+        ll ans = 0;
+        sort(arr + 1, arr + 1 + n);
+        for (int i = 1; i <= n; i += 2) {
+            ans += (arr[i + 1] - arr[i]);
         }
-        cout << 2 * ans1 + 2 * solve() << '\n';
+        dp[0] = 0;
+        if (n >= 4)
+            dp[4] = arr[4] - arr[1] + arr[3] - arr[2];
+        if (n >= 6)
+            dp[6] = arr[6] - arr[1] + arr[5] - arr[4] + arr[3] - arr[2];
+        if (n >= 8)
+            dp[8] = arr[4] - arr[1] + arr[3] - arr[2] + arr[8] - arr[5] + arr[7] - arr[6];
+        for (int i = 10; i <= n; i += 2) {
+            ll tmp1 = arr[i] - arr[i - 3] + arr[i - 1] - arr[i - 2];
+            ll tmp2 = arr[i] - arr[i - 5] + arr[i - 1] - arr[i - 2] + arr[i - 3] - arr[i - 4];
+            dp[i] = min(dp[i - 4] + tmp1, dp[i - 6] + tmp2);
+        }
+        printf("%lld\n", ans + dp[n]);
     }
     return 0;
 }
