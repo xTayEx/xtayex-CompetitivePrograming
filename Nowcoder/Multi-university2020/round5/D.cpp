@@ -16,47 +16,48 @@
 #define INF 0x3f3f3f3f
 #define lson lef, mid, rt << 1
 #define rson mid + 1, rig, rt << 1 | 1
-const int maxn = 8e5 + 7;
+const int maxn = 500 + 5;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
-int a[maxn], b[maxn];
 int p[maxn];
+int dp[maxn];
+inline void init(int n)
+{
+    for (int i = 0; i <= n; i++) {
+        dp[i] = 1;
+    }
+}
+//inline void Debug(int len)
+//{
+//for(int i=1;i<=len;i++){
+//printf("%d%c",p[i],i==len?'\n':' ');
+//}
+//}
 int main()
 {
-    int n;
-    cin >> n;
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-        p[a[i]] = i;
+    //freopen("./D.in", "r", stdin);
+    int N;
+    scanf("%d", &N);
+    for (int i = 1; i <= N; i++) {
+        scanf("%d", &p[i]);
     }
-    for (int i = 0; i < n; i++) {
-        b[i] = a[(i + n + p[1]) % n];
-    }
-    int ans = 0, lastpos = -2, lastval = -1;
-    for (int i = n - 1; i >= 0; i--) {
-        if (b[i] != i + 1) {
-            int pos;
-            for (int j = 0; j < n; j++) {
-                if (b[j] == i + 1) {
-                    pos = j;
-                    break;
-                }
+    int maxi = 0;
+    for (int k = 0; k < N; k++) {
+        init(N);
+        dp[0] = 1;
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j < i; j++) {
+                if (p[i] > p[j])
+                    dp[i] = max(dp[i], dp[j] + 1);
             }
-            for (int j = pos; j < i; j++) {
-                swap(b[j], b[j + 1]);
-            }
-            if (pos != lastpos - 1 || i + 1 != lastval - 1) {
-                ans++;
-            }
-            lastpos = pos;
-            lastval = b[i];
         }
+        maxi = max(dp[N], maxi);
+        //printf("maxi = %d\n",maxi);
+        //Debug(N);
+        rotate(p + 1, p + 2, p + 1 + N);
     }
-    cout << ans << endl;
+    int ans = N - maxi;
+    printf("%d\n", ans);
     return 0;
 }
-/*
-8
-8 4 5 7 3 6 2 1
-*/
