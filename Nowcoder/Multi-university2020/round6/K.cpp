@@ -1,59 +1,99 @@
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <cctype>
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#define mst(a, b) memset((a), (b), sizeof(a))
+#define debug printf("debug\n")
+#define INF 0x3f3f3f3f
+#define lson lef, mid, rt << 1
+#define rson mid + 1, rig, rt << 1 | 1
+const int maxn = 5e5 + 5;
 using namespace std;
-using ll = long long;
-const int N = 5e5 + 5;
-unordered_map<int, int> mp;
-int a[N];
-
+typedef long long ll;
+typedef unsigned long long ull;
+int arr[maxn];
+int pre[maxn];
+int suf[maxn];
+unordered_map<int, int> cnt;
 int main()
 {
-    ios::sync_with_stdio(0);
-    cin.tie(0), cout.tie(0);
-
-    int t;
-    cin >> t;
-    while (t--) {
-        ll n, k;
-        cin >> n >> k;
-        bool flag = true;
-        for (int i = 1; i <= n; ++i) {
-            cin >> a[i];
-            if (a[i] > k)
-                flag = false;
-        }
-
-        // left;
-        int cnt, l, r;
-        mp.clear(), cnt = 0, r = 0;
-        for (int i = 1; i <= n && flag; ++i) {
-            if (mp[a[i]]++ == 0)
-                cnt++;
-            if (mp[a[i]] >= 2) {
-                r = i - 1;
-                break;
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n, k;
+        scanf("%d %d", &n, &k);
+        bool flag = 1;
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", &arr[i]);
+            if (arr[i] > k || arr[i] < 1) {
+                flag = 0;
             }
         }
-        mp.clear(), cnt = 0, l = 0;
-        for (int i = n; i > r && flag; --i) {
-            if (mp[a[i]]++ == 0)
-                cnt++;
-            if (mp[a[i]] >= 2) {
-                l = i + 1;
-                break;
+        if (!flag) {
+            puts("NO");
+            continue;
+        }
+        if (n < k) {
+            puts("YES");
+            continue;
+        }
+        pre[0] = suf[n + 1] = 0;
+        cnt.clear();
+        for (int i = 1; i <= n; i++) {
+            pre[i] = pre[i - 1];
+            if (cnt[arr[i]] == 0) {
+                pre[i]++;
             }
+            cnt[arr[i]]++;
         }
-        mp.clear(), cnt = 0;
-        if ((l - r - 1) % k)
-            flag = false;
-        for (int i = r + 1; i < l && flag; ++i) {
-            if (mp[a[i]]++ == 0)
-                cnt++;
-            if (i - r > k && --mp[a[i - k + 1]] == 0)
-                cnt--;
-            if (i - r >= k && cnt != k)
-                flag = false;
+        cnt.clear();
+        for (int i = n; i >= 1; i--) {
+            suf[i] = suf[i + 1];
+            if (cnt[arr[i]] == 0) {
+                suf[i]++;
+            }
+            cnt[arr[i]]++;
         }
-        cout << (flag ? "YES" : "NO") << endl;
+        int lef = 1;
+        int rig = n;
+        while (lef <= n && pre[lef] == lef)
+            lef++;
+        while (rig >= 1 && suf[rig] == n - rig + 1)
+            rig--;
+        cnt.clear();
+        for (int i = lef; i <= rig; i++) {
+            printf("arr[i] = %d\n",arr[i]);
+            printf("cnt[arr[i]] = %d\n",cnt[arr[i]]);
+            cnt[arr[i]]++;
+        }
+        int mini = INF;
+        int maxi = 0;
+        for(auto& it:cnt){
+            mini=min(mini,it.second);
+            maxi=max(maxi,it.second);
+        }
+        printf("lef = %d, rig = %d, mini = %d, maxi = %d\n", lef, rig, mini, maxi);
+        cnt.clear();
+        int len = rig - lef + 1;
+        if (len % k == 0 && maxi == mini) {
+            puts("YES");
+        } else {
+            puts("NO");
+        }
     }
     return 0;
 }
+/*
+ * 
+ * 8 3
+ * 2 3 1 2 3 1 2 3 （"YES")
+ */
