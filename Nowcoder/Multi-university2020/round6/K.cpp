@@ -25,7 +25,7 @@ int rmost[maxn];
 unordered_map<int, int> cnt;
 int main()
 {
-    freopen("./Kgen.in","r",stdin);
+    //freopen("./Kgen.in","r",stdin);
     int T;
     scanf("%d", &T);
     while (T--) {
@@ -44,25 +44,31 @@ int main()
         }
         if (n <= k) {
             cnt.clear();
-            flag = 1;
-            for (int i = 1; i <= n; i++) {
-                cnt[arr[i]]++;
-                if (cnt[arr[i]] != 0) {
-                    flag = 0;
-                    break;
-                }
+            int L = 1;
+            int R = n;
+            while (L <= n && cnt[arr[L]] == 0) {
+                cnt[arr[L]]++;
+                L++;
             }
-            if (flag)
+            cnt.clear();
+            while (R >= 1 && cnt[arr[R]] == 0) {
+                cnt[arr[R]]++;
+                R--;
+            }
+            //printf("L = %d, R = %d\n", L, R);
+            if (R < L)
                 puts("YES");
             else
                 puts("NO");
         } else {
+            cnt.clear();
+            int p = 1;
             for (int i = 1; i <= n; i++) {
-                int p = i;
                 while (cnt[arr[p]] == 0 && p <= n) {
                     cnt[arr[p]]++;
                     p++;
                 }
+                cnt[arr[i]] = 0;
                 rmost[i] = p - 1;
                 //printf("i = %d, rmost[i] = %d\n",i,rmost[i]);
             }
@@ -93,7 +99,9 @@ int main()
     return 0;
 }
 /*
- * 
+ *
  * 8 3
  * 2 3 1 2 3 1 2 3 （"YES")
- */
+ * 7 3
+ * 2 3 3 1 3 2 1
+*/

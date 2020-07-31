@@ -1,21 +1,24 @@
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #include <cstdio>
 using namespace std;
- 
+
 const int N = 2e6 + 7;
- 
-unordered_map<int, int>vis;
- 
+
+unordered_map<int, int> vis;
+
 int le[N], a[N];
- 
-int main() {
-    freopen("./Kgen.in", "r", stdin);
-    int t; scanf("%d", &t);
+
+int main()
+{
+    //freopen("./Kgen.in", "r", stdin);
+    int t;
+    scanf("%d", &t);
     while (t--) {
- 
+
         vis.clear();
-        int n, k; scanf("%d %d", &n, &k);
+        int n, k;
+        scanf("%d %d", &n, &k);
         int f = 0;
         for (int i = 1; i <= n; i++) {
             scanf("%d", &a[i]);
@@ -27,10 +30,12 @@ int main() {
             puts("NO");
         } else if (k >= n) {
             int l = 1;
-            while (l <= n && vis[a[l]] == 0) vis[a[l]] = 1, l++;
+            while (l <= n && vis[a[l]] == 0)
+                vis[a[l]] = 1, l++;
             vis.clear();
             int r = n;
-            while(r <= n && vis[a[r]] == 0) vis[a[r]] = 1, r--;
+            while (r <= n && vis[a[r]] == 0)
+                vis[a[r]] = 1, r--;
             if (l > r) {
                 puts("YES");
             } else {
@@ -44,6 +49,7 @@ int main() {
                     l++;
                 }
                 le[i] = l;
+                printf("i = %d, le[i] = %d\n", i, le[i]);
                 vis[a[i]] = 0;
             }
             int flag = 0;
@@ -68,7 +74,6 @@ int main() {
             } else {
                 puts("NO");
             }
-             
         }
     }
 }
