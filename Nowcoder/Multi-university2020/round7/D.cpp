@@ -22,16 +22,11 @@ typedef long long ll;
 typedef unsigned long long ull;
 int main()
 {
-    int T;
-    for(int i=1;i<=40000;i++){
-        ll n=i;
-        __int128 sum=(n*(n+1)*(2*n+1))/6;
-        ll sq=sqrt(sum);
-        double sqd=sqrt(1.0*sum);
-        if(fabs(sq*1.0-sqd)<=1e-5){
-
-            printf("%lld\n",n);
-        }
+    int T;scanf("%d",&T);
+    while(T--){
+        ll n;scanf("%lld",&n);
+        if(n==1||n==24) puts("Fake news!");
+        else puts("Nobody knows it better than me!");
     }
     return 0;
 }
