@@ -28,7 +28,7 @@ inline ll solve(ll x)
     ll j;
     ll ans = 0;
     for (i = 1; i <= x && i <= K; i = j + 1) {
-        j = min(x / (x / i), K);
+        j = min(x / (x / i), min(x, K));
         ans = (ans + (j - i + 1) * (x / i) % mod) % mod;
     }
     return ans;
@@ -38,7 +38,11 @@ int main()
     scanf("%lld %lld", &N, &K);
     ll ans = solve(N) % mod;
     ans = (ans % mod + solve(N - 1) % mod) % mod;
-    ans = (ans + K - N) % mod;
+    ans = (ans + K) % mod;
+    ans = (ans - N) % mod;
+    while (ans < 0)
+        ans += mod;
+    ans %= mod;
     printf("%lld\n", ans);
     return 0;
 }
