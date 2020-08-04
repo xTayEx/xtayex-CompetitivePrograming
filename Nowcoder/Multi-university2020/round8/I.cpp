@@ -16,50 +16,58 @@
 #define INF 0x3f3f3f3f
 #define lson lef, mid, rt << 1
 #define rson mid + 1, rig, rt << 1 | 1
-const int maxn = 1e5 + 5;
+const int maxn = 2e5 + 5;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
-struct node {
-    int a, b;
-    bool operator<(const node& nn) const
-    {
-        if (a != nn.a)
-            return a < nn.a;
-        return b < nn.b;
+int pre[maxn];
+bool isr[maxn];
+unordered_map<int, int> id;
+inline void init(int n)
+{
+    for(int i=0;i<=2*n;i++){
+        isr[i]=0;pre[i]=i;
     }
-};
-node ns[maxn];
-unordered_map<int, bool> vis;
+    id.clear();
+}
+int findr(int x)
+{
+    if(x==pre[x]) return x;
+    return pre[x]=findr(pre[x]);
+}
+void merge(int x,int y)
+{
+    int fx=findr(x);
+    int fy=findr(y);
+    if(fx==fy){
+        isr[fx]=isr[fy]=1;
+    }else{
+        pre[fx]=fy;
+        isr[fy]=isr[fy]|isr[fx];
+    }
+}
 int main()
 {
-    int T;
-    scanf("%d", &T);
-    int kase = 1;
-    while (T--) {
-        vis.clear();
-        int n;
-        scanf("%d", &n);
-        for (int i = 1; i <= n; i++) {
-            scanf("%d %d", &ns[i].a, &ns[i].b);
+    int T;scanf("%d",&T);
+    int kase=0;
+    while(T--){
+        int N;scanf("%d",&N);
+        init(N);
+        int a,b;
+        int cnt=0;
+        for(int i=1;i<=N;i++){
+            scanf("%d %d",&a,&b);
+            if(!id[a]) id[a]=++cnt;
+            if(!id[b]) id[b]=++cnt;
+            merge(id[a],id[b]);
         }
-        sort(ns + 1, ns + 1 + n);
-        int ans = 0;
-        for (int i = 1; i <= n; i++) {
-            if (ns[i].a > ns[i].b)
-                swap(ns[i].a, ns[i].b);
-            if (!vis[ns[i].a]) {
-                vis[ns[i].a] = 1;
-                //printf("%d ",ns[i].a);
-                ans++;
-            } else if (!vis[ns[i].b]) {
-                vis[ns[i].b] = 1;
-                //printf("%d ",ns[i].b);
-                ans++;
+        int ans=cnt;
+        for(int i=1;i<=cnt;i++){
+            if(pre[i]==i&&!isr[i]){
+                ans--;
             }
         }
-        //puts("");
-        printf("Case #%d: %d\n", kase++, ans);
+        printf("Case #%d: %d\n",++kase,ans);
     }
     return 0;
 }
