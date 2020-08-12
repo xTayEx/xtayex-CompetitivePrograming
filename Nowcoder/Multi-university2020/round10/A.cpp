@@ -38,12 +38,12 @@ int main()
             else {
                 int tmp1 = (ans[i - 1] * 2) % p;
                 int tmp2 = (ans[i - 1] * 3) % p;
-                if (mp.count(tmp1) == 0 && tmp1 > 0) {
-                    ans.push_back(tmp1);
-                    mp[tmp1] = 1;
-                } else if (mp.count(tmp2) == 0 && tmp2 > 0) {
+                if (mp.count(tmp2) == 0 && tmp2 > 0) {
                     ans.push_back(tmp2);
                     mp[tmp2] = 1;
+                } else if (mp.count(tmp1) == 0 && tmp1 > 0) {
+                    ans.push_back(tmp1);
+                    mp[tmp1] = 1;
                 } else {
                     flag = 0;
                     break;
