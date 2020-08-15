@@ -1,3 +1,4 @@
+
 #include <algorithm>
 #include <cctype>
 #include <cmath>
@@ -19,7 +20,7 @@
 #define lowbit(x) (x & (-x))
 #define lson lef, mid, rt << 1
 #define rson mid + 1, rig, rt << 1 | 1
-const int maxn = 1e5 + 5;
+const int maxn = 2e5 + 5;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
@@ -96,20 +97,19 @@ void buildVirTree() // 建虚树
         Top--;
     }
 }
-void dfs1(int u, int fa)
+void dfs(int u, int fa)
 {
     ans += 1LL * w[u] * dep[u];
-    //lldebug(ans);
     int sz = G[u].size();
     for (int i = 0; i < sz; i++) {
         int v = G[u][i];
         if (v == fa)
             continue;
-        dfs1(v, u);
+        dfs(v, u);
         w[u] += w[v];
     }
 }
-void dfs2(int u, int fa)
+void solve(int u, int fa)
 {
     int sz = G[u].size();
     for (int i = 0; i < sz; i++) {
@@ -118,7 +118,7 @@ void dfs2(int u, int fa)
             continue;
         if ((w[1] - w[v]) - w[v] < 0) {
             ans += ((w[1] - w[v]) - w[v]) * (dep[v] - dep[u]);
-            dfs2(v, u);
+            solve(v, u);
         }
     }
 }
@@ -139,7 +139,7 @@ int main()
         }
         get_mindiv(n);
         buildVirTree();
-        dfs1(1, 0), dfs2(1, 0);
+        dfs(1, 0), solve(1, 0);
         printf("%lld\n", ans);
     }
     return 0;
