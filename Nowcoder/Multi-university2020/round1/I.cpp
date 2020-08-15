@@ -100,7 +100,7 @@ int main()
     while (scanf("%d%d", &n, &m) != EOF) {
         int nowid = 1;
         for (int i = 1; i <= 2 * (n + m); i++) {
-            G[i].clear(),match[i] = 0;
+            G[i].clear(), match[i] = 0;
         }
         for (int i = 1; i <= n; i++) {
             scanf("%d", &d[i]);
@@ -131,8 +131,8 @@ int main()
                 ans += blossom(i, nowid - 1);
             }
         }
-        idebug(ans);
-        idebug(nowid);
+        //idebug(ans);
+        //idebug(nowid);
         printf("%s\n", 2 * ans == (nowid - 1) ? "Yes" : "No");
     }
     return 0;
