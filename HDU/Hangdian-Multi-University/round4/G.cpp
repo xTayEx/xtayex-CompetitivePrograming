@@ -30,7 +30,7 @@ inline void addedge(int u, int v)
     G[v].emplace_back(u);
 }
 bool used[maxn];
-int lefcnt, rigcnt, dis;
+int bnd, dis;
 int dx[maxn], dy[maxn], cx[maxn], cy[maxn];
 int tot;
 bool bfs()
@@ -38,7 +38,7 @@ bool bfs()
     queue<int> que;
     dis = INF;
     mst(dx, -1), mst(dy, -1);
-    for (int i = 1; i <= lefcnt; i++) {
+    for (int i = 1; i <= bnd; i++) {
         if (cx[i] == -1) {
             que.push(i);
             dx[i] = 0;
@@ -80,7 +80,7 @@ int hopcroft_karp()
     mst(cx, -1), mst(cy, -1);
     while (bfs()) {
         mst(used, 0);
-        for (int i = 1; i <= lefcnt; i++) {
+        for (int i = 1; i <= bnd; i++) {
             if (cx[i] == -1) {
                 res += dfs(i);
             }
@@ -105,12 +105,11 @@ int main()
     int T;
     scanf("%d", &T);
     while (T--) {
-        vi.clear(), lvis.clear();
+        vi.clear();
         int n;
         scanf("%d", &n);
         init(n);
-        tot = 0;
-        lefcnt = rigcnt = 0;
+        tot = 0, bnd = 0;
         for (int i = 1; i <= n; i++) {
             scanf("%lld%lld", &t[i], &x[i]);
             ll tmp1 = x[i] - t[i];
@@ -119,7 +118,7 @@ int main()
         }
         sort(vi.begin(), vi.end());
         vi.erase(unique(vi.begin(), vi.end()), vi.end());
-        lefcnt = distance(vi.begin(), vi.end());
+        bnd = distance(vi.begin(), vi.end());
         for (int i = 1; i <= n; i++) {
             ll tmp1 = x[i] - t[i];
             ll tmp2 = x[i] + t[i];
