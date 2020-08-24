@@ -24,7 +24,7 @@ int main()
 {
     int T;scanf("%d",&T);
     while(T--){
-        int l,r,m;scanf("%d%d%d",&l,&r,&m);
+        ll l,r,m;scanf("%lld%lld%lld",&l,&r,&m);
 
     }
 }
