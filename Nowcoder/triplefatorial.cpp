@@ -36,7 +36,8 @@ int main()
     while (T--) {
         ll n, m;
         scanf("%lld%lld", &n, &m);
-        if (n == 2) {
+        if (n <= 2) {
+            if (n == 0) n++;
             printf("%lld\n", n % m);
         } else if (n == 3) {
             if (m <= 720) {
