@@ -24,11 +24,9 @@ ll a[maxn], b[maxn];
 vector<int> vi;
 int main()
 {
-    //freopen("./cf1401C.in", "r", stdin);
     int T;
     scanf("%d", &T);
     while (T--) {
-        //debug(T);
         vi.clear();
         int n;
         scanf("%d", &n);
