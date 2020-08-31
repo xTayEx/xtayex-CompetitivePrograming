@@ -5,7 +5,6 @@ const int N = 1e6 + 5, MOD = 1e9 + 7;
 bool isnp[N];
 vector<int> primes;
 int minpf[N];
-
 void init()
 {
     isnp[0] = isnp[1] = 1;

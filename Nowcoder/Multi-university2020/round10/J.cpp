@@ -21,19 +21,27 @@ const int maxn = 1e5 + 5;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
-int p[505];
+int p1[505],p2[505];
 vector<int> graph[505];
 int main()
 {
     int n;
     scanf("%d", &n);
     for (int i = 1; i <= n; i++) {
-        scanf("%d", &p[i]);
+        scanf("%d", &p1[i]);
+    }
+    for(int i=1;i<=n;i++){
+        scanf("%d",&p2[i]);
     }
     for (int i = 1; i <= n; i++) {
-        if (p[i] != 0) {
-            graph[i].emplace_back(p[i]);
-            graph[p[i]].emplace_back(i);
+        if (p1[i] != 0) {
+            graph[i].emplace_back(p1[i]);
+            graph[p1[i]].emplace_back(i);
+        }
+    }
+    for(int i=1;i<=n;i++){
+        if(p2[i]!=0){
+            
         }
     }
 }
