@@ -12,60 +12,68 @@
 #include <unordered_map>
 #include <vector>
 #define mst(a, b) memset((a), (b), sizeof(a))
-#define debug printf("debug\n")
+#define debug(x) cerr << #x << " = " << x << "\n"
 #define INF 0x3f3f3f3f
 #define lson lef, mid, rt << 1
 #define rson mid + 1, rig, rt << 1 | 1
-const int maxn = 2e2 + 7;
+const int maxn = 2e7 + 5;
+const long long mod = 1e9 + 7;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
-ll a[maxn][maxn], sum[maxn], c[maxn], dps[maxn];
-double ans[maxn];
-int p[maxn];
+ll f[maxn];
+ll inv[maxn];
+inline void init()
+{
+    f[1] = 500000004, f[0] = 1LL, inv[0] = 1LL;
+    for (int i = 1; i < maxn; i++) {
+        inv[i] = (inv[i - 1] % mod * 500000004LL) % mod;
+    }
+    for (int i = 1; i < maxn; i++) {
+        inv[i] = (inv[i - 1] % mod * inv[i]) % mod;
+    }
+    ll pow2 = 1, tmp=1;
+    for (int i = 1; i < maxn; i++) {
+        pow2 = (pow2 * 2LL) % mod;
+        tmp = (pow2 - 1) * tmp % mod;
+        f[i] = (tmp * inv[i]) % mod;
+    }
+    for (int i = 2; i < maxn; i++) {
+        f[i] = f[i] ^ f[i - 1];
+    }
+}
+ll exgcd(ll a, ll b, ll& x, ll& y)
+{
+    if (a == 0 && b == 0) {
+        return -1;
+    }
+    if (b == 0) {
+        x = 1, y = 0;
+        return a;
+    }
+    ll d = exgcd(b, a % b, y, x);
+    y -= a / b * x;
+    return d;
+}
+ll Inv(ll a, ll p)
+{
+    ll x, y;
+    ll d = exgcd(a, p, x, y);
+    if (d == 1)
+        return (x % p + p) % p;
+    else
+        return -1;
+}
 int main()
 {
-    int t;
-    scanf("%d", &t);
-    while (t--) {
-        ll n, m;
-        scanf("%lld%lld", &n, &m);
-        double res = 0;
-        
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                scanf("%lld", &a[i][j]);
-            }
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                sum[j] += a[i][j];
-            }
-            for (int j = 0; j < m; j++) {
-                dps[j] = sum[j];
-                c[j] = a[i][j];
-                ans[j] = 1.0 * dps[j] / c[j];
-                int flag = j;
-                for (int k = 0; k < j; k++) {
-                    double tmp = 1.0 * (dps[j] + dps[k]) / (c[j] + c[k]);
-                    if (tmp > ans[j]) {
-                        ans[j] = tmp;
-                        flag = k;
-                    }
-                }
-                if (flag != j) {
-                    dps[j] += dps[flag];
-                    c[j] += c[flag];
-                }
-                res = max(res, ans[j]);
-            }
-        }
-        printf("%.8f\n", res);
+    int T;
+    scanf("%d", &T);
+    init();
+    while (T--) {
+        ll n;
+        scanf("%lld", &n);
+        ll ans = f[n];
+        printf("%lld\n", ans);
     }
     return 0;
 }
-/*
-8
-8 4 5 7 3 6 2 1
-10
-1 8 2 3 4 5 6 9 10 7*/
