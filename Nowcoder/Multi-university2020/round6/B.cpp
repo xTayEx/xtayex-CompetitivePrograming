@@ -42,28 +42,6 @@ inline void init()
         f[i] = f[i] ^ f[i - 1];
     }
 }
-ll exgcd(ll a, ll b, ll& x, ll& y)
-{
-    if (a == 0 && b == 0) {
-        return -1;
-    }
-    if (b == 0) {
-        x = 1, y = 0;
-        return a;
-    }
-    ll d = exgcd(b, a % b, y, x);
-    y -= a / b * x;
-    return d;
-}
-ll Inv(ll a, ll p)
-{
-    ll x, y;
-    ll d = exgcd(a, p, x, y);
-    if (d == 1)
-        return (x % p + p) % p;
-    else
-        return -1;
-}
 int main()
 {
     int T;
