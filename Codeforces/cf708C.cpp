@@ -12,8 +12,7 @@
 #include <unordered_map>
 #include <vector>
 #define mst(a, b) memset((a), (b), sizeof(a))
-#define debug(x) cerr << "\033[01;34m" << #x << " = " << x << "\033[0m" \
-                      << "\n"
+#define debug(x) cerr << "\033[01;31m" << #x << " = " << x << "\033[0m" << "\n"
 #define INF 0x3f3f3f3f
 #define lson lef, mid, rt << 1
 #define rson mid + 1, rig, rt << 1 | 1
@@ -92,19 +91,7 @@ int main()
     dfs1(1, -1);
     fa[rt] = -1;
     dfs2(rt);
-    //for (int i = 1; i <= n; i++) {
-        //debug(i);
-        //debug(siz[i]);
-        //debug(maxson[i][0]);
-        //debug(maxson[i][1]);
-        //puts("----------------------------");
-    //}
     dfs3(rt, 0);
-    //for (int i = 1; i <= n; i++) {
-        //debug(i);
-        //debug(out[i]);
-        //puts("=======================");
-    //}
     for (int i = 1; i <= n; i++) {
         printf("%d%c", ans[i] ? 1 : 0, i == n ? '\n' : ' ');
     }
