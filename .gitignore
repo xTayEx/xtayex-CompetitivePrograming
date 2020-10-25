@@ -16,6 +16,8 @@
 !/CSP/
 !/region/**/
 !/region/
+!/ICPC/**/
+!/ICPC/
 !*.md
 !*.gitignore
 !*.cpp
