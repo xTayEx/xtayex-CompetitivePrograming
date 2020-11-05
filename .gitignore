@@ -18,6 +18,8 @@
 !/region/
 !/ICPC/**/
 !/ICPC/
+!/CCPC/**/
+!/CCPC/
 !*.md
 !*.gitignore
 !*.cpp
