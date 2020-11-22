@@ -1,0 +1,22 @@
+ans = [ 'D', 
+        'A', 
+        'ABCD', 
+        'D', 
+        'A',
+        'C',
+        'AB',
+        'A',
+        'B',
+        'C',
+        'B',
+        'D',
+        'D',
+        'A',
+        'ABC',
+        'D',
+        'B',
+        'D',
+        'D',
+        'D']
+for item in ans:
+    print(item)

@@ -23,6 +23,8 @@
 !*.md
 !*.gitignore
 !*.cpp
+!*.js
+!*.py
 !*.c
 !*.h
 !*.sh
