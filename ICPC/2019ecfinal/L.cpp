@@ -1,22 +1,32 @@
-#include <iostream>
-#include <cstdio>
 #include <algorithm>
-#include <cstring>
-#include <string>
-#include <vector>
-#include <map>
-#include <stack>
-#include <queue>
-#include <set>
 #include <cctype>
 #include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
 #include <unordered_map>
-#define mst(a,b) memset((a),(b),sizeof(a))
-#define debug(x) cerr << "\033[01;31m" << #x << " = " << x << "\033[0m" << "\n"
+#include <vector>
+#define mst(a, b) memset((a), (b), sizeof(a))
+#define debug(x) cerr << "\033[01;31m" << #x << " = " << x << "\033[0m" \
+                      << "\n"
 #define INF 0x3f3f3f3f
-#define lson lef,mid,rt<<1
-#define rson mid+1,rig,rt<<1|1
-const int maxn=1e5+5;
+#define lson lef, mid, rt << 1
+#define rson mid + 1, rig, rt << 1 | 1
+const int maxn = 1e5 + 5;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
+int main()
+{
+    int val;
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 100; j++) {
+            printf("%d\n", val);
+        }
+    }
+}
