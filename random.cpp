@@ -21,11 +21,13 @@ const int maxn = 1e5 + 5;
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
+
 ll mul(ll x, ll y, ll m)
 {
     ll ans = x * y - (ll)((long double)x * y / m + 0.5) * m;
     return ans < 0 ? ans + m : ans;
 }
+
 inline ll fpow(ll a, ll b, ll p)
 {
     ll ret = 1;
@@ -36,26 +38,28 @@ inline ll fpow(ll a, ll b, ll p)
     }
     return ret;
 }
+
 namespace miller_rabin {
-inline bool is_prime(ll x)
-{
-    if (x == 2 || x == 3 || x == 7 || x == 61 || x == 24251) return 1;
-    if (x % 2 == 0 || x < 2 || x == 46856248255981LL) return 0;
-    ll s = 0;
-    ll t = x - 1;
-    while (!(t & 1)) ++s, t >>= 1;
-    for (ll a : { 2, 61, 3, 7, 11, 13, 233, 2333 }) {
-        ll b = fpow(a, t, x);
-        for (int i = 0; i < s; i++) {
-            ll k = mul(b, b, x);
-            if (k == 1 && b != 1 && b != x - 1) return 0;
-            b = k;
+    inline bool is_prime(ll x)
+    {
+        if (x == 2 || x == 3 || x == 7 || x == 61 || x == 24251) return 1;
+        if (x % 2 == 0 || x < 2 || x == 46856248255981LL) return 0;
+        ll s = 0;
+        ll t = x - 1;
+        while (!(t & 1)) ++s, t >>= 1;
+        for (ll a : { 2, 61, 3, 7, 11, 13, 233, 2333 }) {
+            ll b = fpow(a, t, x);
+            for (int i = 0; i < s; i++) {
+                ll k = mul(b, b, x);
+                if (k == 1 && b != 1 && b != x - 1) return 0;
+                b = k;
+            }
+            if (b != 1) return 0;
         }
-        if (b != 1) return 0;
+        return 1;
     }
-    return 1;
 }
-}
+
 int main()
 {
     bool flag = 1;
