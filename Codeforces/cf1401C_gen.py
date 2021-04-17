@@ -5,3 +5,7 @@ for i in range(8461):
     f.write('1000000000\n')
 f.write('\n')
 f.close()
+
+def foo(times):
+    for i in range(times):
+        print('in foo')
